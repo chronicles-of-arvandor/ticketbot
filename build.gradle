@@ -1,0 +1,37 @@
+plugins {
+    id 'org.jetbrains.kotlin.jvm' version '1.9.0'
+    id 'com.github.johnrengelman.shadow' version '8.1.1'
+    id 'application'
+}
+
+group = 'net.arvandor'
+version = '1.0.0'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    implementation("net.dv8tion:JDA:5.0.0-beta.16") {
+        exclude module: 'opus-java'
+    }
+    implementation 'com.squareup.retrofit2:retrofit:2.9.0'
+    implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
+}
+
+kotlin {
+    jvmToolchain(17)
+}
+
+shadowJar {
+    mergeServiceFiles()
+    minimize()
+}
+
+application {
+    mainClass = 'net.arvandor.ticketbot.TicketBotKt'
+}
+
+artifacts {
+    archives shadowJar
+}
